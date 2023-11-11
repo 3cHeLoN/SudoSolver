@@ -1,6 +1,4 @@
 """Loader of sudoku files."""
-
-
 import os
 import numpy as np
 
@@ -8,20 +6,34 @@ import numpy as np
 class SudoGrid:
     def __init__(self, sudo_str: str) -> None:
         # TODO: add checks for valid str.
-        self.fixed_digits = np.array(sudo_str.replace("_", "0"), dtype=int).reshape(
-            (9, 9)
-        )
+        self.fixed_digits = list(map(int, sudo_str.replace("_", "0")))
+
         self.digits = self.fixed_digits.copy()
 
     def show(self) -> None:
         """Print self."""
+        print("╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗")
         for count, digit in enumerate(self.digits):
-            if count % 9 == 0:
-                print("\n")
+            column = count % 9
+            row = count // 9
+            if column % 3 == 0:
+                print("║", end="")
+            else:
+                print("│", end="")
             if digit == 0:
-                print(" ", end=false)
+                print("   ", end="")
+            else:
+                print(f" {digit:d} ", end="")
 
-            print(digit, end=false)
+            if column == 8:
+                print("║")
+                if row == 8:
+                    break
+                if (row + 1) % 3 == 0:
+                    print("╠═══╪═══╪═══╬═══╪═══╪═══╬═══╪═══╪═══╣")
+                else:
+                    print("╟───┼───┼───╫───┼───┼───╫───┼───┼───╢")
+        print("╚═══╧═══╧═══╩═══╧═══╧═══╩═══╧═══╧═══╝")
 
 
 class SpfLoader:

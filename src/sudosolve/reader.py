@@ -1,14 +1,41 @@
 """Loader of sudoku files."""
 import os
-import numpy as np
+from dataclasses import dataclass
+
+from colorama import Fore, Style
+
+
+@dataclass
+class Digit:
+    """Represent a digit."""
+
+    value: int
+    fixed: bool = False
+
+    def __repr__(self) -> str:
+        if self.value == 0:
+            return "   "
+        str_value = ""
+        if self.fixed:
+            str_value += Fore.RED
+
+        str_value += f" {self.value:d} "
+        if self.fixed:
+            str_value += Style.RESET_ALL
+
+        return str_value
 
 
 class SudoGrid:
+    """Represent a sudoku grid."""
+
     def __init__(self, sudo_str: str) -> None:
         # TODO: add checks for valid str.
         self.fixed_digits = list(map(int, sudo_str.replace("_", "0")))
+        self.digits = []
 
-        self.digits = self.fixed_digits.copy()
+        for digit in self.fixed_digits:
+            self.digits.append(Digit(digit, fixed=(digit != 0)))
 
     def show(self) -> None:
         """Print self."""
@@ -20,10 +47,7 @@ class SudoGrid:
                 print("║", end="")
             else:
                 print("│", end="")
-            if digit == 0:
-                print("   ", end="")
-            else:
-                print(f" {digit:d} ", end="")
+            print(digit, end="")
 
             if column == 8:
                 print("║")

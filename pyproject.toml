@@ -7,7 +7,8 @@ authors = [
 ]
 
 dependencies = [
-    
+    "numpy",
+    "colorama"
 ]
 
 [build-system]

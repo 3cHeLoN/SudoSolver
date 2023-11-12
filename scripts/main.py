@@ -1,6 +1,8 @@
+"""Start the solver."""
 import logging
 
 from sudosolve.reader import SpfLoader
+from sudosolve.solver import Solver
 
 
 def main():
@@ -8,6 +10,9 @@ def main():
     sudokus = loader.load("sudokus.spf")
     for sudoku in sudokus:
         sudoku.show()
+
+    solver = Solver()
+    solver.solve(sudokus[0])
 
 
 if __name__ == "__main__":

@@ -72,6 +72,11 @@ class SudoGrid:
         idx = row * 9 + col
         return self.digits[idx].value
 
+    def get_digit(self, row: int, col: int) -> Digit:
+        """Return a digit."""
+        idx = row * 9 + col
+        return self.digits[idx]
+
     def set(self, row: int, col: int, value: int) -> None:
         idx = row * 9 + col
         if self.digits[idx].fixed:
@@ -79,7 +84,10 @@ class SudoGrid:
 
         self.digits[idx] = Digit(value)
 
-        self.bitmap[row, col] = 1 << (value - 1)
+        if value == 0:
+            self.bitmap[row, col] = 0
+        else:
+            self.bitmap[row, col] = 1 << (value - 1)
 
     def check_valid(self) -> bool:
         """Check if no double digits."""

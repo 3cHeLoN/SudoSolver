@@ -7,7 +7,7 @@ from sudosolve.solver import Solver
 
 def main():
     loader = SpfLoader()
-    sudokus = loader.load("sudokus.spf")
+    sudokus = loader.load(filename="sudokus.spf")
     for sudoku in sudokus:
         sudoku.show()
 
